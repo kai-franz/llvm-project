@@ -1056,6 +1056,14 @@ public:
                      "TargetInstrInfo::storeRegToStackSlot!");
   }
 
+  virtual void storeRegToStackSlotOrFPU(MachineBasicBlock &MBB,
+                                   MachineBasicBlock::iterator MI,
+                                   Register SrcReg, bool isKill, int FrameIndex,
+                                   const TargetRegisterClass *RC,
+                                   const TargetRegisterInfo *TRI) const {
+    return storeRegToStackSlot(MBB, MI, SrcReg, isKill, FrameIndex, RC, TRI);
+  }
+
   /// Load the specified register of the given register class from the specified
   /// stack frame index. The load instruction is to be added to the given
   /// machine basic block before the specified machine instruction.
@@ -1066,6 +1074,14 @@ public:
                                     const TargetRegisterInfo *TRI) const {
     llvm_unreachable("Target didn't implement "
                      "TargetInstrInfo::loadRegFromStackSlot!");
+  }
+
+  virtual void loadRegFromStackSlotOrFPU(MachineBasicBlock &MBB,
+                                    MachineBasicBlock::iterator MI,
+                                    Register DestReg, int FrameIndex,
+                                    const TargetRegisterClass *RC,
+                                    const TargetRegisterInfo *TRI) const {
+      loadRegFromStackSlot(MBB, MI, DestReg, FrameIndex, RC, TRI);
   }
 
   /// This function is called for all pseudo instructions
